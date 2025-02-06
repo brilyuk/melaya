@@ -10,49 +10,56 @@ function swiperInit() {
             },
             on: {
                 slideChangeTransitionStart: () => {
-                    disableSlideAnimation();
+                    disableSlideAnimation(slider);
                 },
                 slideChange: () => {
-                    updateCurrentSlide();
+                    updateCurrentSlide(swiper,slider);
                 },
                 slideChangeTransitionEnd: () => {
-                    enableSlideAnimation();
+                    enableSlideAnimation(slider);
                 },
             }
         });
-        const currentCount = slider.querySelector('.slider__count-current');
-        const allCount = slider.querySelector('.slider__count-all');
-        const slides = slider.querySelectorAll('.swiper-slide');
-        const totalSlides = slides.length;
-        
-        const formatNumber = (num) => num.toString().padStart(3, '0');
-        allCount.innerHTML = formatNumber(totalSlides);
-        
-        const updateCurrentSlide = () => {
-            currentCount.innerHTML = formatNumber(swiper.activeIndex + 1);
-        };
-
-        const disableSlideAnimation = () => {
-            slides.forEach((slide) => {
-                slide.querySelectorAll('[data-aos]').forEach((element) => {
-                    element.style.visibility = 'hidden';
-                    element.classList.remove('aos-init', 'aos-animate');
-                });
-            });
-        };
-
-        const enableSlideAnimation = () => {
-            slides.forEach((slide) => {
-                slide.querySelectorAll('[data-aos]').forEach((element) => {
-                    element.style.visibility = 'visible';
-                });
-            });
-            AOS.init();
-        };
-        
-        updateCurrentSlide();
+        allSlides(slider);
+        updateCurrentSlide(swiper,slider);
     });
 }
+
+const allSlides = (slider) => {
+    const allCount = slider.querySelector('.slider__count-all');
+    const slides = slider.querySelectorAll('.swiper-slide');
+    const totalSlides = slides.length;
+    
+    const formatNumber = (num) => num.toString().padStart(3, '0');
+    allCount.innerHTML = formatNumber(totalSlides);
+    
+}
+
+const updateCurrentSlide = (swiper, slider) => {
+    const currentCount = slider.querySelector('.slider__count-current');
+    const formatNumber = (num) => num.toString().padStart(3, '0');
+    currentCount.innerHTML = formatNumber(swiper.activeIndex + 1);
+};
+
+const disableSlideAnimation = (slider) => {
+    const slides = slider.querySelectorAll('.swiper-slide');
+    slides.forEach((slide) => {
+        slide.querySelectorAll('[data-aos]').forEach((element) => {
+            element.style.visibility = 'hidden';
+            element.classList.remove('aos-init', 'aos-animate');
+        });
+    });
+};
+
+const enableSlideAnimation = (slider) => {
+    const slides = slider.querySelectorAll('.swiper-slide');
+    slides.forEach((slide) => {
+        slide.querySelectorAll('[data-aos]').forEach((element) => {
+            element.style.visibility = 'visible';
+        });
+    });
+    AOS.init();
+};
 
 window.addEventListener("DOMContentLoaded", () => {
     swiperInit();
