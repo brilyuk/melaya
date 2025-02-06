@@ -11,6 +11,20 @@
 	animation: vertical-scroll 30s linear infinite;
 }
 
+.w-webflow-badge {
+	display: none !important;
+}
+
+.swiper-slide-active .card {
+	opacity: 1;
+}
+
+@media screen and (max-width: 991px) {
+	.w-nav-overlay {
+		top: 0;
+	}
+}
+
 @keyframes horizontal-scroll {
 	from { transform: translateX(0); }
 	to { transform: translateX(calc(-50% - 45px)); }
@@ -18,12 +32,4 @@
 @keyframes vertical-scroll {
 	from { transform: translateY(0); }
 	to { transform: translateY(calc(-50% - 45px)); }
-}
-
-.w-webflow-badge {
-	display: none !important;
-}
-
-.swiper-slide-active .card {
-	opacity: 1;
 }
