@@ -44,20 +44,16 @@ const updateCurrentSlide = (swiper, slider) => {
 const disableSlideAnimation = (slider) => {
     const slides = slider.querySelectorAll('.swiper-slide');
     slides.forEach((slide) => {
+        slide.style.opacity = 0;
         slide.querySelectorAll('[data-aos]').forEach((element) => {
-            element.style.visibility = 'hidden';
             element.classList.remove('aos-init', 'aos-animate');
         });
     });
 };
 
 const enableSlideAnimation = (slider) => {
-    const slides = slider.querySelectorAll('.swiper-slide');
-    slides.forEach((slide) => {
-        slide.querySelectorAll('[data-aos]').forEach((element) => {
-            element.style.visibility = 'visible';
-        });
-    });
+    const currentSlide = slider.querySelector('.swiper-slide-active');
+    currentSlide.style.opacity = 1;
     AOS.init();
 };
 
