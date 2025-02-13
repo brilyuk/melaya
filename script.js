@@ -25,6 +25,10 @@ function swiperInit() {
     });
 }
 
+function initAnimation() {
+    AOS.init({ once: true });
+}
+
 const allSlides = (slider) => {
     const allCount = slider.querySelector('.slider__count-all');
     const slides = slider.querySelectorAll('.swiper-slide');
@@ -54,10 +58,10 @@ const disableSlideAnimation = (slider) => {
 const enableSlideAnimation = (slider) => {
     const currentSlide = slider.querySelector('.swiper-slide-active');
     currentSlide.style.opacity = 1;
-    AOS.init();
+    initAnimation();
 };
 
 window.addEventListener("DOMContentLoaded", () => {
     swiperInit();
-    AOS.init();
+    initAnimation();
 })
