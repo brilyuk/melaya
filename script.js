@@ -1,3 +1,6 @@
+const header = document.querySelector("header");
+const headroom = new Headroom(header);
+
 // swiper logic  
 function swiperInit() {
     document.querySelectorAll('.slider').forEach((slider) => {
@@ -62,6 +65,7 @@ const enableSlideAnimation = (slider) => {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
+    headroom.init();
     swiperInit();
     initAnimation();
 })
