@@ -18,8 +18,13 @@ function swiperInit() {
                 slideChange: () => {
                     updateCurrentSlide(swiper,slider);
                 },
-                slideChangeTransitionEnd: () => {
-                    enableSlideAnimation(slider);
+                slideNextTransitionEnd: () => {
+                    console.log('enableNextSlideAnimation');
+                    enableNextSlideAnimation(slider);
+                },
+                slidePrevTransitionEnd: () => {
+                    console.log('enablePrevSlideAnimation');
+                    enablePrevSlideAnimation(slider);
                 },
             }
         });
@@ -58,10 +63,26 @@ const disableSlideAnimation = (slider) => {
     });
 };
 
-const enableSlideAnimation = (slider) => {
+const enableNextSlideAnimation = (slider) => {
+    slider.querySelectorAll('[data-aos]').forEach((element) => {
+        element.setAttribute('data-aos', 'fade-left');
+    });
     const currentSlide = slider.querySelector('.swiper-slide-active');
-    currentSlide.style.opacity = 1;
-    initAnimation();
+    setTimeout(() => {
+        currentSlide.style.opacity = 1;
+        initAnimation();
+    }, 200);
+};
+
+const enablePrevSlideAnimation = (slider) => {
+    slider.querySelectorAll('[data-aos]').forEach((element) => {
+        element.setAttribute('data-aos', 'fade-right');
+    });
+    const currentSlide = slider.querySelector('.swiper-slide-active');
+    setTimeout(() => {
+        currentSlide.style.opacity = 1;
+        initAnimation();
+    }, 200);
 };
 
 window.addEventListener("DOMContentLoaded", () => {
