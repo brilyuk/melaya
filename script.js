@@ -19,10 +19,10 @@ function swiperInit() {
                     updateCurrentSlide(swiper,slider);
                 },
                 slideNextTransitionEnd: () => {
-                    enableNextSlideAnimation(slider);
+                    enableSlideAnimation(slider, 'fade-left');
                 },
                 slidePrevTransitionEnd: () => {
-                    enablePrevSlideAnimation(slider);
+                    enableSlideAnimation(slider, 'fade-right');
                 },
             }
         });
@@ -61,20 +61,9 @@ const disableSlideAnimation = (slider) => {
     });
 };
 
-const enableNextSlideAnimation = (slider) => {
+const enableSlideAnimation = (slider, direction) => {
     slider.querySelectorAll('[data-aos]').forEach((element) => {
-        element.setAttribute('data-aos', 'fade-left');
-    });
-    const currentSlide = slider.querySelector('.swiper-slide-active');
-    setTimeout(() => {
-        currentSlide.style.opacity = 1;
-        initAnimation();
-    }, 200);
-};
-
-const enablePrevSlideAnimation = (slider) => {
-    slider.querySelectorAll('[data-aos]').forEach((element) => {
-        element.setAttribute('data-aos', 'fade-right');
+        element.setAttribute('data-aos', direction);
     });
     const currentSlide = slider.querySelector('.swiper-slide-active');
     setTimeout(() => {
