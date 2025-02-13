@@ -19,11 +19,9 @@ function swiperInit() {
                     updateCurrentSlide(swiper,slider);
                 },
                 slideNextTransitionEnd: () => {
-                    console.log('enableNextSlideAnimation');
                     enableNextSlideAnimation(slider);
                 },
                 slidePrevTransitionEnd: () => {
-                    console.log('enablePrevSlideAnimation');
                     enablePrevSlideAnimation(slider);
                 },
             }
