@@ -72,8 +72,33 @@ const enableSlideAnimation = (slider, direction) => {
     }, 200);
 };
 
+const sliderFooterReversePosition = () => {
+    const sliderReverseFooter = document.querySelector('.slider__footer.reverse');
+    if (!sliderReverseFooter) return;
+
+    const isMobile = window.innerWidth < 480;
+    const cardContent = sliderReverseFooter.closest('.slider').querySelector('.card__content');
+    const cardContentPosition = Math.round(cardContent.getBoundingClientRect().left);
+    sliderReverseFooter.style.left = !isMobile ? `${cardContentPosition}px` : '85px';
+}
+
+const debounce = (func, wait) => {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+};
+
 window.addEventListener("DOMContentLoaded", () => {
     headroom.init();
     swiperInit();
     initAnimation();
+    sliderFooterReversePosition();
 })
+
+window.addEventListener('resize', debounce(sliderFooterReversePosition, 250));
