@@ -1,8 +1,19 @@
 const header = document.querySelector("header");
 const headroom = new Headroom(header);
 
-// swiper logic  
-function swiperInit() {
+const debounce = (func, wait) => {
+	let timeout;
+	return function executedFunction(...args) {
+		const later = () => {
+			clearTimeout(timeout);
+			func(...args);
+		};
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+	};
+};
+
+const swiperInit = () => {
 	document.querySelectorAll('.slider').forEach((slider) => {
 		const swiper = new Swiper(slider.querySelector('.swiper'), {
 			loop: false,
@@ -31,7 +42,7 @@ function swiperInit() {
 	});
 }
 
-function initAnimation() {
+const initAnimation = () => {
 	AOS.init({ once: true });
 }
 
@@ -71,33 +82,29 @@ const enableSlideAnimation = (slider, direction) => {
 	}, 200);
 };
 
-const sliderFooterReversePosition = () => {
-	const sliderReverseFooter = document.querySelector('.slider__footer.reverse');
+const sliderFooterReversePosition = (context = document) => {
+	const sliderReverseFooter = context.querySelector('.slider__footer.reverse');
 	if (!sliderReverseFooter) return;
 
+	const cardContent = sliderReverseFooter.closest('.slider')?.querySelector('.card__content');
+	if (!cardContent) return;
+
 	const isMobile = window.innerWidth < 480;
-	const cardContent = sliderReverseFooter.closest('.slider').querySelector('.card__content');
 	const cardContentPosition = Math.round(cardContent.getBoundingClientRect().left);
 	sliderReverseFooter.style.left = !isMobile ? `${cardContentPosition}px` : '85px';
 }
 
-const debounce = (func, wait) => {
-	let timeout;
-	return function executedFunction(...args) {
-		const later = () => {
-			clearTimeout(timeout);
-			func(...args);
-		};
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-	};
-};
+const initSlidersFooter = () => {
+	document.querySelectorAll('.slider').forEach(slider => {
+		sliderFooterReversePosition(slider);
+	});
+}
 
 window.addEventListener("DOMContentLoaded", () => {
 	headroom.init();
 	swiperInit();
 	initAnimation();
-	sliderFooterReversePosition();
+	initSlidersFooter();
 })
 
-window.addEventListener('resize', debounce(sliderFooterReversePosition, 250));
+window.addEventListener('resize', debounce(initSlidersFooter, 250));
